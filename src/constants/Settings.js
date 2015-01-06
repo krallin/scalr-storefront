@@ -15,6 +15,11 @@ module.exports = {
       description: 'A skeleton for an isomorphic web application (SPA) built with React.js and Flux',
       keywords: null
 
+    },
+
+    credentials: {
+      keyId: 'No Key Id',
+      keySecret: 'No Key Secret'
     }
   }
 

@@ -25,6 +25,7 @@ function getState() {
 
 var DefaultLayout = React.createClass({
 
+  // Magically binds DefaultLayout.onChange to PageStore.emitChange!
   mixins: [PageStore.Mixin],
 
   getInitialState() {
@@ -64,6 +65,7 @@ var DefaultLayout = React.createClass({
               <span>© KriaSoft</span>
               <span><Link to="/">Home</Link></span>
               <span><Link to="/privacy">Privacy</Link></span>
+              <span><Link to="/credentials">Credentials</Link></span>
             </p>
           </div>
         </div>

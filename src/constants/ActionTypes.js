@@ -16,7 +16,10 @@ var ActionTypes = keyMirror({
   SET_CURRENT_ROUTE: null,
 
   // Page action types
-  SET_CURRENT_PAGE: null
+  SET_CURRENT_PAGE: null,
+
+  // Credentials actions types
+  SET_CREDENTIALS: null
 
 });
 
