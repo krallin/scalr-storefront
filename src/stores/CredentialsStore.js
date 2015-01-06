@@ -15,7 +15,11 @@ var _credentials;
 
 var LOCAL_STORAGE_VAR = 'scalrCredentials';
 
+
 var fromLocalStorage = function () {
+  if (typeof localStorage === 'undefined') {
+    return null;
+  }
   return JSON.parse(localStorage[LOCAL_STORAGE_VAR]);
 };
 
@@ -27,7 +31,6 @@ var toLocalStorage = function (credentials) {
 var PageStore = new Store({
 
   /**
-   * Gets metadata associated with the current page.
    * @returns {Credentials}
    */
   get() {

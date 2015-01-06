@@ -20,7 +20,11 @@ module.exports = {
     credentials: {
       keyId: 'No Key Id',
       keySecret: 'No Key Secret'
-    }
-  }
+    },
 
+    farms: {
+      items: []
+    }
+
+  }
 };

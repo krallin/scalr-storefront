@@ -19,7 +19,10 @@ var ActionTypes = keyMirror({
   SET_CURRENT_PAGE: null,
 
   // Credentials actions types
-  SET_CREDENTIALS: null
+  SET_CREDENTIALS: null,
+
+  // Farms actions types
+  CHANGE_FARMS: null
 
 });
 

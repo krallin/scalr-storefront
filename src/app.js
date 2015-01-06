@@ -56,7 +56,8 @@ function render(page) {
 var routes = {
   '/': () => render(require('./components/pages/Index')),
   '/privacy': () => render(require('./components/pages/Privacy')),
-  '/credentials': () => render(require('./components/pages/CredentialsPage'))
+  '/credentials': () => render(require('./components/pages/Credentials')),
+  '/farms': () => render(require('./components/pages/Farms'))
 };
 
 // Initialize a router

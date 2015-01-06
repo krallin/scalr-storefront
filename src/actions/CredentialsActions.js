@@ -6,7 +6,6 @@ var ActionTypes = require('../constants/ActionTypes');
 module.exports = {
 
   /**
-   * Set metadata for the current page (title, description, keywords etc.).
    * @param {Credentials} credentials object.
    */
   setCredentials(credentials) {
