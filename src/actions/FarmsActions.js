@@ -15,6 +15,66 @@ var AlertsActions = require('./AlertsActions');
 var makeApiCall = require('../api/ApiClient');  // TODO - Actually create client.
 
 
+var refreshFarm = function (farmId, silent) {
+  // If silent isn't passed, we assume we don't want silent.
+  var logInfo = _.isUndefined(silent) && !silent;
+
+  var credentials = CredentialsStore.get();
+
+  var apiCall = {
+    credentials: credentials,
+    name: 'FarmGetDetails',
+    apiParams: {FarmID: farmId}
+  };
+
+  makeApiCall(apiCall)
+    .then(function (resp) {
+      if (resp === undefined) {
+        // The request completed, but the response was an API Error.
+        // TODO: this is a bit ugly, need to find a better way to abort the promise.
+        return;
+      }
+
+      var servers = [];
+
+      _.forEach(resp.querySelectorAll('FarmGetDetailsResponse>FarmRoleSet>Item'), function (farmRole) {
+        var farmRoleAlias = farmRole.querySelector('Alias').textContent;
+
+        _.forEach(farmRole.querySelectorAll('ServerSet>Item'), function (server) {
+          var serverIndex = parseInt(server.querySelector('Index').textContent, 10);
+          servers.push({
+            id: server.querySelector('ServerID').textContent,
+            index: serverIndex,
+            name: _.template('<%= alias %>-<%= index %>', {alias: farmRoleAlias, index: serverIndex}),
+            externalIp: server.querySelector('ExternalIP').textContent,
+            internalIp: server.querySelector('InternalIP').textContent,
+            status: server.querySelector('Status').textContent
+          });
+        });
+      });
+
+      if (logInfo) {
+        AlertsActions.addAlert({
+          level: 'info',
+          title: 'Reloaded Farm',
+          message: _.template('<%= serverCount %> servers', {serverCount: _.size(servers)}),
+          timeout: 2000
+        });
+      }
+
+      Dispatcher.handleViewAction({
+        actionType: ActionTypes.CHANGE_FARM,
+        farmId: farmId,
+        farm:      {
+          servers: servers,
+          name: resp.querySelector('FarmGetDetailsResponse>Name').textContent,
+          status: parseInt(resp.querySelector('FarmGetDetailsResponse>Farm>Status').textContent, 10)
+        }
+      });
+    });
+};
+
+
 var refreshFarms = function (silent) {
   // If silent isn't passed, we assume we don't want silent.
   var logInfo = _.isUndefined(silent) && !silent;
@@ -35,13 +95,12 @@ var refreshFarms = function (silent) {
         return;
       }
 
-      var farmsList = Array.prototype.slice.call(resp.querySelectorAll('Item')).map(function (item) {
-        // TODO - More elegant?
+      var farms = _.map(Array.prototype.slice.call(resp.querySelectorAll('Item')), function (item) {
         return {
-          id:     parseInt(item.querySelectorAll('ID')[0].textContent, 10),
-          name:   item.querySelectorAll('Name')[0].textContent,
-          status: parseInt(item.querySelectorAll('Status')[0].textContent, 10),
-          comments: item.querySelectorAll('Comments')[0].textContent
+          id:     parseInt(item.querySelector('ID').textContent, 10),
+          name:   item.querySelector('Name').textContent,
+          status: parseInt(item.querySelector('Status').textContent, 10),
+          comments: item.querySelector('Comments').textContent
         };
       });
 
@@ -49,14 +108,14 @@ var refreshFarms = function (silent) {
         AlertsActions.addAlert({
           level: 'info',
           title: 'Refreshed Farms List',
-          message: _.template('loaded <%= farmCount %>', {farmCount: farmsList.length}),
+          message: _.template('<%= farmCount %> Farms', {farmCount: _.size(farms)}),
           timeout: 2000
         });
       }
 
       Dispatcher.handleViewAction({
         actionType: ActionTypes.CHANGE_FARMS,
-        farms:      farmsList
+        farms:      farms
       });
 
     });
@@ -80,7 +139,7 @@ var launchFarm = function (farmId) {
       }
 
       var doRedirect = function () {
-        require('../routing/router').transitionTo('farms');
+        require('../routing/router').transitionTo('farm', {farmId: farmId});
       };
 
       AlertsActions.addAlert({
@@ -157,6 +216,7 @@ var provisionTemplate = function (template, farmName) {
 
 
 module.exports = {
-  refreshFarms: refreshFarms,
+  refreshFarm: refreshFarm,
+  refreshFarms: refreshFarms,  // TODO  Rename to refresh farms list or something
   provisionTemplate: provisionTemplate
 };

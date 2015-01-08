@@ -251,7 +251,7 @@ gulp.task('deploy', function() {
   return gulp.src(DEST + '/**/*')
     .pipe($.if('**/robots.txt', !argv.production ? $.replace('Disallow:', 'Disallow: /') : $.util.noop()))
     .pipe($.ghPages({
-      remoteUrl: 'https://github.com/{name}/{name}.github.io.git',
+      remoteUrl: 'git@github.com:scalr-storefront/scalr-storefront.github.io.git',
       branch: 'master'
     }));
 });

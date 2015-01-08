@@ -15,7 +15,7 @@ var AlertsActions = require('../../actions/AlertsActions');
 var FarmsActions = require('../../actions/FarmsActions');
 
 var FarmsStore = require('../../stores/FarmsStore');
-var FarmsMixin = require('../mixins/FarmsMixin');
+var FarmsMixin = require('../mixins/FarmsListMixin');
 
 
 var TemplatesList = React.createClass({

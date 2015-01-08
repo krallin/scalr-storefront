@@ -4,6 +4,9 @@ var _ = require('lodash');
 
 var React = require('react/addons');
 
+var Router = require('react-router');
+var Link = Router.Link;
+
 var Bootstrap = require('react-bootstrap');
 var PageHeader = Bootstrap.PageHeader;
 var ButtonToolbar = Bootstrap.ButtonToolbar;
@@ -11,18 +14,21 @@ var Button = Bootstrap.Button;
 var Table = Bootstrap.Table;
 
 var FarmsStore = require('../../stores/FarmsStore');
-var FarmsMixin = require('../mixins/FarmsMixin');
+var FarmsMixin = require('../mixins/FarmsListMixin');
 
 
 var FarmsList = React.createClass({
   render: function() {
     var createItem = function(farm) {
+      var params = {farmId: farm.id}
+
       return (
         /* jshint ignore:start */
         <tr key={farm.id}>
           <td>{farm.id}</td>
           <td>{farm.name}</td>
           <td>{farm.status === 0 ? 'Stopped' : 'Running'}</td>
+          <td><Link to="farm" params={params}>View</Link></td>
         </tr>
         /* jshint ignore:end */
       );
@@ -35,9 +41,10 @@ var FarmsList = React.createClass({
           <th>ID</th>
           <th>Name</th>
           <th>Status</th>
+          <th>More</th>
         </thead>
         <tbody>
-        {this.props.items.map(createItem)}
+        {this.props.farms.map(createItem)}
         </tbody>
       </Table>
       /* jshint ignore:end */
@@ -47,6 +54,8 @@ var FarmsList = React.createClass({
 
 
 var FarmsPage = React.createClass({
+  title: 'Farms',
+
   mixins: [FarmsStore.Mixin, FarmsMixin],
 
   getInitialState: function () {
@@ -75,7 +84,7 @@ var FarmsPage = React.createClass({
         </div>
 
         <div>
-          <FarmsList items={this.state.farms} />
+          <FarmsList farms={this.state.farms} />
         </div>
       </div>
       /* jshint ignore:end */

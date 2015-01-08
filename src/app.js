@@ -42,7 +42,7 @@ Dispatcher.register((payload) => {
 
 /* jshint ignore:start */
 router.run(function (Handler) {
-  PageActions.set(Handler);  // Handler is  the state of the component.
+  PageActions.set(Handler);  // TODO - Make it work.
   React.render(<Handler/>, document.body);
 });
 /* jshint ignore:end */

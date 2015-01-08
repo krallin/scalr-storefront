@@ -11,8 +11,8 @@ module.exports = {
   defaults: {
 
     page: {
-      title: 'React.js Starter Kit',
-      description: 'A skeleton for an isomorphic web application (SPA) built with React.js and Flux',
+      title: 'Scalr Storefront',
+      description: 'A basic storefront consuming the Scalr API',
       keywords: null
 
     },
@@ -20,9 +20,7 @@ module.exports = {
     credentials: {
       keyId: 'No Key Id',
       keySecret: 'No Key Secret'
-    },
-
-    farms: []
+    }
 
   }
 };

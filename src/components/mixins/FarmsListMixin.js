@@ -12,8 +12,6 @@ var FarmsMixin = {
   },
 
   componentWillMount: function () {
-    this.farms = FarmsStore.get();
-
     if (_.isEmpty(FarmsStore.get())) {
       FarmsActions.refreshFarms();
     }

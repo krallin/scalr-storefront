@@ -19,6 +19,7 @@ var ActionTypes = keyMirror({
   SET_CREDENTIALS: null,
 
   // Farms actions types
+  CHANGE_FARM: null,
   CHANGE_FARMS: null,
 
   // ALerts actions types
