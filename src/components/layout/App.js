@@ -11,7 +11,12 @@
 var React = require('react');
 var PageStore = require('../../stores/PageStore');
 var Link = require('../common/Link');
-var Navbar = require('../layout/Navbar');
+
+var Navbar = require('react-bootstrap/Navbar');
+var Nav = require('react-bootstrap/Nav');
+var NavItem = require('react-bootstrap/NavItem');
+var DropdownButton = require('react-bootstrap/DropdownButton');
+var MenuItem = require('react-bootstrap/MenuItem');
 
 /**
  * Retrieves the current page metadata from the PageStore.
@@ -46,8 +51,8 @@ var DefaultLayout = React.createClass({
     ) : (
       <div className="jumbotron">
         <div className="container text-center">
-          <h1>React</h1>
-          <p>Complex web apps made easy</p>
+          <h1>Scalr Storefront</h1>
+          <p>Simplified user experience for Scalr</p>
         </div>
       </div>
     );
@@ -56,17 +61,22 @@ var DefaultLayout = React.createClass({
     return (
       /* jshint ignore:start */
       <div>
-        <Navbar />
+        <Navbar className="navbar-top">
+          <Nav>
+            <NavItem>Home</NavItem>
+            <NavItem></NavItem>
+            <NavItem></NavItem>
+          </Nav>
+        </Navbar>
         {header}
         {this.props.children}
         <div className="navbar-footer">
           <div className="container">
             <p className="text-muted">
-              <span>© KriaSoft</span>
+              <span>© Scalr</span>
               <span><Link to="/">Home</Link></span>
               <span><Link to="/farms">Farms</Link></span>
               <span><Link to="/credentials">Credentials</Link></span>
-              <span><Link to="/privacy">Privacy</Link></span>
             </p>
           </div>
         </div>
