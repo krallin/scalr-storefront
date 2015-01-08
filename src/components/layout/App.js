@@ -26,24 +26,13 @@ var MenuItem = Bootstrap.MenuItem;
 
 var Alert = require('./AlertBlock');
 
-
-var ALERTS = [
-  {
-    level: 'danger',
-    title: 'Whoops',
-    message: 'This looks bad.',
-    timeout: 0,
-    dismissed: false
-  }
-];
-
 var DefaultLayout = React.createClass({
   render() {
     // TODO - Container here
     return (
       /* jshint ignore:start */
-      <div>
-        <Navbar className="navbar-top">
+      <div className="container">
+        <Navbar>
           <Nav>
             <NavItemLink to="home">Home</NavItemLink>
             <NavItemLink to="farms">New</NavItemLink>
@@ -51,7 +40,7 @@ var DefaultLayout = React.createClass({
             <NavItemLink to="credentials">Credentials</NavItemLink>
           </Nav>
         </Navbar>
-        <Alert alerts={ALERTS}/>
+        <Alert/>
         <RouteHandler/>
         <div className="navbar-footer">
           <div className="container">

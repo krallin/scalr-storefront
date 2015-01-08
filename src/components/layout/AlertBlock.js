@@ -51,7 +51,7 @@ var AlertBlock = React.createClass({
 
     return (
       /* jshint ignore:start */
-      <div>
+      <div class="container">
         {alerts}
       </div>
       /* jshint ignore:end */

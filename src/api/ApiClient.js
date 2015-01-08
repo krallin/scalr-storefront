@@ -1,5 +1,7 @@
 'use strict';
 
+var AlertsActions = require('../actions/AlertsActions');
+
 var assign = require('react/lib/Object.assign');
 var sjcl = require('sjcl');
 var moment = require('moment');
@@ -95,20 +97,30 @@ var makeApiCall = function (apiCall) {
     data: params,
     type: 'xml',
     crossOrigin: true
-  });
-
-//  $scope.lastResponse = {message: 'API Call In Progress'};
-//  $http({
-//    method: 'GET',
-//    url: $scope.apiSettings.apiUrl,
-//    params: params
-//  }).
-//    success(function(data, status, headers, config) {
-//      $scope.lastResponse.message = 'API Call Succeeded';
-//    }).
-//    error(function(data, status, headers, config) {
-//      $scope.lastResponse.message = 'An error occured';
-//    });
+  })
+    .then(function (resp) {
+      var errors = Array.prototype.slice.call(resp.querySelectorAll('Error'));
+      if (errors.length > 0) {
+        var error = errors[0];
+        console.log(error);
+        AlertsActions.addAlert({
+          level: 'danger',
+          title: 'Invalid API request',
+          message: error.querySelectorAll('Message')[0].textContent,
+          timeout: 0
+        });
+        return;
+      }
+      return resp;
+    },
+    function (err, msg) {
+      AlertsActions.addAlert({
+        level: 'danger',
+        title: 'An error occurred',
+        message: err.status ? err.status : 'Network unavailable, or server didn\'t respond. Check JavaScript console.',
+        timeout: 0
+      });
+    });
 };
 
 module.exports = makeApiCall;
