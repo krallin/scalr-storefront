@@ -4,6 +4,7 @@ var App = require('./../components/layout/App');
 var Home = require('./../components/pages/Home');
 var Farms = require('./../components/pages/Farms');
 var Credentials = require('./../components/pages/Credentials');
+var New = require('./../components/pages/Templates');
 
 var React = require('react');
 var Router = require('react-router');
@@ -14,9 +15,10 @@ var DefaultRoute = Router.DefaultRoute;
 var routes = (
   /* jshint ignore:start */
   <Route name="app" path="/" handler={App}>
+    <DefaultRoute name="home" handler={Home}/>
+    <Route name="new" handler={New}/>
     <Route name="farms" handler={Farms}/>
     <Route name="credentials" handler={Credentials}/>
-    <DefaultRoute name="home" handler={Home}/>
   </Route>
   /* jshint ignore:end */
 );

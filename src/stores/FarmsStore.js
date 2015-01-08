@@ -4,14 +4,9 @@ var Store = require('../core/Store');
 var Dispatcher = require('../core/Dispatcher');
 var ActionTypes = require('../constants/ActionTypes');
 
-/**
- * @typedef Farms
- * @type {object}
- * @property {list} items
- */
-var _farms;
+var _farms;  // List of farms
 
-var FarmStore = new Store({
+var FarmsStore = new Store({
 
   get() {
     return _farms || require('../constants/Settings').defaults.farms;
@@ -23,15 +18,15 @@ var FarmStore = new Store({
 
 });
 
-FarmStore.dispatcherToken = Dispatcher.register(payload => {
+FarmsStore.dispatcherToken = Dispatcher.register(payload => {
 
   var action = payload.action;
 
   if (action.actionType == ActionTypes.CHANGE_FARMS) {
     _farms = action.farms;
-    FarmStore.emitChange();
+    FarmsStore.emitChange();
   }
 
 });
 
-module.exports = FarmStore;
+module.exports = FarmsStore;

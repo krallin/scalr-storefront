@@ -35,7 +35,7 @@ var DefaultLayout = React.createClass({
         <Navbar>
           <Nav>
             <NavItemLink to="home">Home</NavItemLink>
-            <NavItemLink to="farms">New</NavItemLink>
+            <NavItemLink to="new">New</NavItemLink>
             <NavItemLink to="farms">Farms</NavItemLink>
             <NavItemLink to="credentials">Credentials</NavItemLink>
           </Nav>

@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var React = require('react/addons');
 
 var Bootstrap = require('react-bootstrap');
@@ -9,7 +11,7 @@ var Button = Bootstrap.Button;
 var Table = Bootstrap.Table;
 
 var FarmsStore = require('../../stores/FarmsStore');
-var FarmsActions = require('../../actions/FarmsActions');
+var FarmsMixin = require('../mixins/FarmsMixin');
 
 
 var FarmsList = React.createClass({
@@ -25,6 +27,7 @@ var FarmsList = React.createClass({
         /* jshint ignore:end */
       );
     };
+
     return (
       /* jshint ignore:start */
       <Table striped bordered condensed hover>
@@ -44,19 +47,14 @@ var FarmsList = React.createClass({
 
 
 var FarmsPage = React.createClass({
-  mixins: [FarmsStore.Mixin],
+  mixins: [FarmsStore.Mixin, FarmsMixin],
 
   getInitialState: function () {
-    return FarmsStore.get();
+    return this.getFarmsForState();
   },
 
   onChange: function () {
-    this.setState(FarmsStore.get());
-  },
-
-  handleSubmit: function (e) {
-    e.preventDefault();
-    FarmsActions.refreshFarms();
+    this.setState(this.getFarmsForState());
   },
 
   render: function () {
@@ -72,22 +70,17 @@ var FarmsPage = React.createClass({
 
         <div>
           <ButtonToolbar>
-            <Button bsStyle="primary" onClick={this.handleSubmit}>Refresh</Button>
+            <Button bsStyle="primary" onClick={this.doRefreshAction}>Refresh</Button>
           </ButtonToolbar>
         </div>
 
         <div>
-          <FarmsList items={this.state.items} />
+          <FarmsList items={this.state.farms} />
         </div>
       </div>
       /* jshint ignore:end */
     );
-  },
-
-  componentWillMount: function () {
-    FarmsActions.refreshFarms();
   }
-
 });
 
 module.exports = FarmsPage;

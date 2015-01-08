@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var React = require('react');
 
 var AlertsStore = require('../../stores/AlertsStore');
@@ -10,8 +12,7 @@ var Alert = Bootstrap.Alert;
 
 // TODO - Force a redraw when an alert is dismissed. Use a store.
 
-var makeAlertEntity = function (alertId, alert) {
-
+var makeAlertEntity = function (alert, alertId) {
   var dismissAlert = function () {
     AlertsActions.dismissAlert(alertId);
   };
@@ -38,16 +39,7 @@ var AlertBlock = React.createClass({
   },
 
   render() {
-    var alerts = [];
-
-    for (var alertId in this.state.alerts) {
-      // TODO - Needed?
-      if (!this.state.alerts.hasOwnProperty(alertId)) {
-        continue;
-      }
-
-      alerts.push(makeAlertEntity(alertId, this.state.alerts[alertId]));
-    }
+    var alerts = _.map(this.state.alerts, makeAlertEntity);
 
     return (
       /* jshint ignore:start */

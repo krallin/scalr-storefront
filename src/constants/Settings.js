@@ -22,9 +22,7 @@ module.exports = {
       keySecret: 'No Key Secret'
     },
 
-    farms: {
-      items: []
-    }
+    farms: []
 
   }
 };
