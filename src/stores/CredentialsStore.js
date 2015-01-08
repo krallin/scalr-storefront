@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var Store = require('../core/Store');
 var Dispatcher = require('../core/Dispatcher');
 var ActionTypes = require('../constants/ActionTypes');
@@ -20,7 +22,13 @@ var fromLocalStorage = function () {
   if (typeof localStorage === 'undefined') {
     return null;
   }
-  return JSON.parse(localStorage[LOCAL_STORAGE_VAR]);
+  try {
+    var storedCredentials = JSON.parse(localStorage[LOCAL_STORAGE_VAR]);
+    if (_.isObject(storedCredentials)) {
+      return storedCredentials;
+    }
+  } catch (e) {}
+  return {};
 };
 
 var toLocalStorage = function (credentials) {
@@ -34,8 +42,7 @@ var CredentialsStore = new Store({
    * @returns {Credentials}
    */
   get() {
-    // TODO - Error handling!
-    return _credentials || fromLocalStorage() || require('../constants/Settings').defaults.credentials;
+    return _credentials || _.merge({},require('../constants/Settings').defaults.credentials, fromLocalStorage());
   },
 
   set(credentials) {
