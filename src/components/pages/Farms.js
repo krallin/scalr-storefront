@@ -1,7 +1,12 @@
 'use strict';
 
 var React = require('react/addons');
-var Router = require('react-router');
+
+var Bootstrap = require('react-bootstrap');
+var PageHeader = Bootstrap.PageHeader;
+var ButtonToolbar = Bootstrap.ButtonToolbar;
+var Button = Bootstrap.Button;
+var Table = Bootstrap.Table;
 
 var FarmsStore = require('../../stores/FarmsStore');
 var FarmsActions = require('../../actions/FarmsActions');
@@ -9,16 +14,29 @@ var FarmsActions = require('../../actions/FarmsActions');
 
 var FarmsList = React.createClass({
   render: function() {
-    var createItem = function(item) {
+    var createItem = function(farm) {
       return (
         /* jshint ignore:start */
-        <li key={item.id}>{item.name} ({item.status === 0 ? 'Stopped' : 'Running'})</li>
+        <tr key={farm.id}>
+          <td>{farm.id}</td>
+          <td>{farm.name}</td>
+          <td>{farm.status === 0 ? 'Stopped' : 'Running'}</td>
+        </tr>
         /* jshint ignore:end */
       );
     };
     return (
       /* jshint ignore:start */
-      <ul>{this.props.items.map(createItem)}</ul>
+      <Table striped bordered condensed hover>
+        <thead>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Status</th>
+        </thead>
+        <tbody>
+        {this.props.items.map(createItem)}
+        </tbody>
+      </Table>
       /* jshint ignore:end */
     );
   }
@@ -45,13 +63,29 @@ var FarmsPage = React.createClass({
     return (
       /* jshint ignore:start */
       <div className="container">
-        <FarmsList items={this.state.items} />
-        <form onSubmit={this.handleSubmit}>
-          <button>Refresh!</button>
-        </form>
+
+        <div>
+          <PageHeader>
+            Active Farms
+          </PageHeader>
+        </div>
+
+        <div>
+          <ButtonToolbar>
+            <Button bsStyle="primary" onClick={this.handleSubmit}>Refresh</Button>
+          </ButtonToolbar>
+        </div>
+
+        <div>
+          <FarmsList items={this.state.items} />
+        </div>
       </div>
       /* jshint ignore:end */
     );
+  },
+
+  componentWillMount: function () {
+    FarmsActions.refreshFarms();
   }
 
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 var App = require('./../components/layout/App');
-var Home = require('./../components/pages/Index');
+var Home = require('./../components/pages/Home');
 var Farms = require('./../components/pages/Farms');
 var Credentials = require('./../components/pages/Credentials');
 

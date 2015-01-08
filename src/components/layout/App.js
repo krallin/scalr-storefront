@@ -17,7 +17,6 @@ var RouteHandler = Router.RouteHandler;
 var ReactRouterBootstrap = require('react-router-bootstrap');
 var NavItemLink = ReactRouterBootstrap.NavItemLink;
 
-
 var Bootstrap = require('react-bootstrap');
 var Navbar = Bootstrap.Navbar;
 var Nav = Bootstrap.Nav;
@@ -25,11 +24,22 @@ var NavItem = Bootstrap.NavItem;
 var DropdownButton = Bootstrap.DropdownButton;
 var MenuItem = Bootstrap.MenuItem;
 
-var PageStore = require('../../stores/PageStore');
+var Alert = require('./AlertBlock');
 
+
+var ALERTS = [
+  {
+    level: 'danger',
+    title: 'Whoops',
+    message: 'This looks bad.',
+    timeout: 0,
+    dismissed: false
+  }
+];
 
 var DefaultLayout = React.createClass({
   render() {
+    // TODO - Container here
     return (
       /* jshint ignore:start */
       <div>
@@ -41,6 +51,7 @@ var DefaultLayout = React.createClass({
             <NavItemLink to="credentials">Credentials</NavItemLink>
           </Nav>
         </Navbar>
+        <Alert alerts={ALERTS}/>
         <RouteHandler/>
         <div className="navbar-footer">
           <div className="container">

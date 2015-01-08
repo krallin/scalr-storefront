@@ -211,14 +211,13 @@ gulp.task('serve', function(cb) {
         // Allow web page requests without .html file extension in URLs
         middleware: function(req, res, cb) {
           var uri = url.parse(req.url);
-          if (uri.pathname.length > 1 &&
-            uri.pathname.lastIndexOf('/browser-sync/', 0) !== 0 &&
-            !fs.existsSync(DEST + uri.pathname)) {
+
+          // If there is no URL, it's not a browser sync, and the file doesn't exist on the system:
+          if (uri.pathname.length > 1 && uri.pathname.lastIndexOf('/browser-sync/', 0) !== 0 && !fs.existsSync(DEST + uri.pathname)) {
             if (fs.existsSync(DEST + uri.pathname + '.html')) {
               req.url = uri.pathname + '.html' + (uri.search || '');
             } else {
-              res.statusCode = 404;
-              req.url = '/404.html' + (uri.search || '');
+              req.url = '/index.html' + (uri.search || '');
             }
           }
           cb();

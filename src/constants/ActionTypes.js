@@ -19,7 +19,11 @@ var ActionTypes = keyMirror({
   SET_CREDENTIALS: null,
 
   // Farms actions types
-  CHANGE_FARMS: null
+  CHANGE_FARMS: null,
+
+  // ALerts actions types
+  ADD_ALERT: null,
+  DISMISS_ALERT: null
 
 });
 

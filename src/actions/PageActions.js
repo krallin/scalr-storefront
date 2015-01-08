@@ -20,8 +20,6 @@ module.exports = {
    * @param {object} The page object.
    */
   set(page) {
-    console.log('???');
-    console.log(page);
     Dispatcher.handleViewAction({
       actionType: ActionTypes.SET_CURRENT_PAGE,
       page: assign({}, pageDefaults, page)
