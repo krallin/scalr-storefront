@@ -9,26 +9,20 @@
 'use strict';
 
 var React = require('react');
+var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
 
-var Router = require('react-router');
-var Route = Router.Route;
-var NotFoundRoute = Router.NotFoundRoute;
-var DefaultRoute = Router.DefaultRoute;
+var router = require('./routing/router');
 
 var Dispatcher = require('./core/Dispatcher');
 var ActionTypes = require('./constants/ActionTypes');
-var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
-
-
-var App = require('./components/layout/App');
-var Home = require('./components/pages/Index');
-var Farms = require('./components/pages/Farms');
-var Credentials = require('./components/pages/Credentials');
+var PageActions = require('./actions/PageActions');
 
 
 // Export React so the dev tools can find it
 (window !== window.top ? window.top : window).React = React;
 
+// Update the page's title when the page changes. We set this here because it's only relevant when running in a
+// browser.
 Dispatcher.register((payload) => {
 
   var action = payload.action;
@@ -46,18 +40,9 @@ Dispatcher.register((payload) => {
 });
 
 
-var routes = (
-  /* jshint ignore:start */
-  <Route name="app" path="/" handler={App}>
-    <Route name="farms" handler={Farms}/>
-    <Route name="credentials" handler={Credentials}/>
-    <DefaultRoute handler={Home}/>
-  </Route>
-  /* jshint ignore:end */
-);
-
 /* jshint ignore:start */
-Router.run(routes, function (Handler) {
+router.run(function (Handler) {
+  PageActions.set(Handler);  // Handler is  the state of the component.
   React.render(<Handler/>, document.body);
 });
 /* jshint ignore:end */

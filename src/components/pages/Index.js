@@ -9,18 +9,8 @@
 'use strict';
 
 var React = require('react');
-var PageActions = require('../../actions/PageActions');
-var App = require('../layout/App');
 
 var HomePage = React.createClass({
-
-  statics: {
-    layout: App
-  },
-
-  componentWillMount() {
-    PageActions.set({title: 'React.js Starter Kit'});
-  },
 
   render() {
     return (

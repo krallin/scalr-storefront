@@ -9,29 +9,8 @@
 'use strict';
 
 var React = require('react');
-var PageActions = require('../../actions/PageActions');
-var App = require('../layout/App');
-
-var Router = require('react-router');
-var Link = Router.Link;
 
 var PrivacyPage = React.createClass({
-
-  statics: {
-    layout: App,
-    breadcrumb: (
-      /* jshint ignore:start */
-      <ol className="breadcrumb">
-        <li><Link to="app">Home</Link></li>
-        <li className="active">Privacy</li>
-      </ol>
-      /* jshint ignore:end */
-    )
-  },
-
-  componentWillMount() {
-    PageActions.set({title: 'Privacy Policy'});
-  },
 
   render() {
     return (

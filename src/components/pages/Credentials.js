@@ -2,32 +2,13 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
-var Link = Router.Link;
 
 var CredentialsStore = require('../../stores/CredentialsStore');
-var PageActions = require('../../actions/PageActions');
 var CredentialsActions = require('../../actions/CredentialsActions');
-var App = require('../layout/App');
 
 
 var CredentialsPage = React.createClass({
   mixins: [React.addons.LinkedStateMixin, CredentialsStore.Mixin],
-
-  statics: {
-    layout: App,
-    breadcrumb: (
-      /* jshint ignore:start */
-      <ol className="breadcrumb">
-        <li><Link to="app">Home</Link></li>
-        <li className="active">Credentials</li>
-      </ol>
-      /* jshint ignore:end */
-    )
-  },
-
-  componentWillMount: function () {
-    PageActions.set({title: 'Credentials'});
-  },
 
   getInitialState: function () {
     return CredentialsStore.get();

@@ -2,12 +2,8 @@
 
 var React = require('react/addons');
 var Router = require('react-router');
-var Link = Router.Link;
-
-var App = require('../layout/App');
 
 var FarmsStore = require('../../stores/FarmsStore');
-var PageActions = require('../../actions/PageActions');
 var FarmsActions = require('../../actions/FarmsActions');
 
 
@@ -31,22 +27,6 @@ var FarmsList = React.createClass({
 
 var FarmsPage = React.createClass({
   mixins: [FarmsStore.Mixin],
-
-  statics: {
-    layout: App,
-    breadcrumb: (
-      /* jshint ignore:start */
-      <ol className="breadcrumb">
-        <li><Link to="app">Home</Link></li>
-        <li className="active">Farms</li>
-      </ol>
-      /* jshint ignore:end */
-    )
-  },
-
-  componentWillMount: function () {
-    PageActions.set({title: 'Farms'});
-  },
 
   getInitialState: function () {
     return FarmsStore.get();
