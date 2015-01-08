@@ -9,11 +9,22 @@
 'use strict';
 
 var React = require('react');
-var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
-var {Router} = require('director');
+
+var Router = require('react-router');
+var Route = Router.Route;
+var NotFoundRoute = Router.NotFoundRoute;
+var DefaultRoute = Router.DefaultRoute;
+
 var Dispatcher = require('./core/Dispatcher');
 var ActionTypes = require('./constants/ActionTypes');
-var router;
+var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
+
+
+var App = require('./components/layout/App');
+var Home = require('./components/pages/Index');
+var Farms = require('./components/pages/Farms');
+var Credentials = require('./components/pages/Credentials');
+
 
 // Export React so the dev tools can find it
 (window !== window.top ? window.top : window).React = React;
@@ -24,10 +35,6 @@ Dispatcher.register((payload) => {
 
   switch (action.actionType)
   {
-    case ActionTypes.SET_CURRENT_ROUTE:
-      router.setRoute(action.route);
-      break;
-
     case ActionTypes.SET_CURRENT_PAGE:
       if (ExecutionEnvironment.canUseDOM) {
         document.title = action.page.title;
@@ -38,27 +45,19 @@ Dispatcher.register((payload) => {
   return true; // No errors.  Needed by promise in Dispatcher.
 });
 
-/**
- * Check if Page component has a layout property; and if yes, wrap the page
- * into the specified layout, then mount to document.body.
- */
-function render(page) {
-  var layout = null, child = null, props = {};
-  while ((layout = page.type.layout || (page.defaultProps && page.defaultProps.layout))) {
-    child = React.createElement(page, props, child);
-    page = layout;
-  }
-  React.render(React.createElement(page, props, child), document.body);
-}
 
-// Define URL routes
-// See https://github.com/flatiron/director
-var routes = {
-  '/': () => render(require('./components/pages/Index')),
-  '/privacy': () => render(require('./components/pages/Privacy')),
-  '/credentials': () => render(require('./components/pages/Credentials')),
-  '/farms': () => render(require('./components/pages/Farms'))
-};
+var routes = (
+  /* jshint ignore:start */
+  <Route name="app" path="/" handler={App}>
+    <Route name="farms" handler={Farms}/>
+    <Route name="credentials" handler={Credentials}/>
+    <DefaultRoute handler={Home}/>
+  </Route>
+  /* jshint ignore:end */
+);
 
-// Initialize a router
-router = new Router(routes).configure({html5history: true}).init();
+/* jshint ignore:start */
+Router.run(routes, function (Handler) {
+  React.render(<Handler/>, document.body);
+});
+/* jshint ignore:end */

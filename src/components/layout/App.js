@@ -9,14 +9,20 @@
 'use strict';
 
 var React = require('react');
-var PageStore = require('../../stores/PageStore');
-var Link = require('../common/Link');
 
-var Navbar = require('react-bootstrap/Navbar');
-var Nav = require('react-bootstrap/Nav');
-var NavItem = require('react-bootstrap/NavItem');
-var DropdownButton = require('react-bootstrap/DropdownButton');
-var MenuItem = require('react-bootstrap/MenuItem');
+var Router = require('react-router');
+var Link = Router.Link;
+var RouteHandler = Router.RouteHandler;
+
+
+var Bootstrap = require('react-bootstrap');
+var Navbar = Bootstrap.Navbar;
+var Nav = Bootstrap.Nav;
+var NavItem = Bootstrap.NavItem;
+var DropdownButton = Bootstrap.DropdownButton;
+var MenuItem = Bootstrap.MenuItem;
+
+var PageStore = require('../../stores/PageStore');
 
 /**
  * Retrieves the current page metadata from the PageStore.
@@ -27,6 +33,7 @@ function getState() {
     title: PageStore.get().title
   };
 }
+
 
 var DefaultLayout = React.createClass({
 
@@ -42,22 +49,6 @@ var DefaultLayout = React.createClass({
   },
 
   render() {
-    /* jshint ignore:start */
-    var header = this.props.children.type.breadcrumb ? (
-      <div className="container">
-        <h2>{this.state.title}</h2>
-        {this.props.children.type.breadcrumb}
-      </div>
-    ) : (
-      <div className="jumbotron">
-        <div className="container text-center">
-          <h1>Scalr Storefront</h1>
-          <p>Simplified user experience for Scalr</p>
-        </div>
-      </div>
-    );
-    /* jshint ignore:end */
-
     return (
       /* jshint ignore:start */
       <div>
@@ -68,15 +59,14 @@ var DefaultLayout = React.createClass({
             <NavItem></NavItem>
           </Nav>
         </Navbar>
-        {header}
-        {this.props.children}
+        <RouteHandler/>
         <div className="navbar-footer">
           <div className="container">
             <p className="text-muted">
               <span>© Scalr</span>
-              <span><Link to="/">Home</Link></span>
-              <span><Link to="/farms">Farms</Link></span>
-              <span><Link to="/credentials">Credentials</Link></span>
+              <span><Link to="app">Home</Link></span>
+              <span><Link to="farms">Farms</Link></span>
+              <span><Link to="credentials">Credentials</Link></span>
             </p>
           </div>
         </div>

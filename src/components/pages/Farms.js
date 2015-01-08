@@ -1,11 +1,14 @@
 'use strict';
 
 var React = require('react/addons');
+var Router = require('react-router');
+var Link = Router.Link;
+
+var App = require('../layout/App');
+
 var FarmsStore = require('../../stores/FarmsStore');
 var PageActions = require('../../actions/PageActions');
 var FarmsActions = require('../../actions/FarmsActions');
-var App = require('../layout/App');
-var Link = require('../common/Link');
 
 
 var FarmsList = React.createClass({
@@ -34,7 +37,7 @@ var FarmsPage = React.createClass({
     breadcrumb: (
       /* jshint ignore:start */
       <ol className="breadcrumb">
-        <li><Link to="/">Home</Link></li>
+        <li><Link to="app">Home</Link></li>
         <li className="active">Farms</li>
       </ol>
       /* jshint ignore:end */

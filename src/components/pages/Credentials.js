@@ -1,11 +1,13 @@
 'use strict';
 
 var React = require('react/addons');
+var Router = require('react-router');
+var Link = Router.Link;
+
 var CredentialsStore = require('../../stores/CredentialsStore');
 var PageActions = require('../../actions/PageActions');
 var CredentialsActions = require('../../actions/CredentialsActions');
 var App = require('../layout/App');
-var Link = require('../common/Link');
 
 
 var CredentialsPage = React.createClass({
@@ -16,7 +18,7 @@ var CredentialsPage = React.createClass({
     breadcrumb: (
       /* jshint ignore:start */
       <ol className="breadcrumb">
-        <li><Link to="/">Home</Link></li>
+        <li><Link to="app">Home</Link></li>
         <li className="active">Credentials</li>
       </ol>
       /* jshint ignore:end */

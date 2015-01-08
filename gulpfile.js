@@ -108,6 +108,7 @@ gulp.task('images', function() {
 // HTML pages
 gulp.task('pages', function() {
   src.pages = ['src/components/pages/**/*.js', 'src/components/pages/404.html'];
+  src.pages = ['src/components/pages/**/*.html'];
 
   var currentPage = {};
   var Dispatcher = require('./src/core/Dispatcher');

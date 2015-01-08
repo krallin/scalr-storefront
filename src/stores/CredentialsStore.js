@@ -28,7 +28,7 @@ var toLocalStorage = function (credentials) {
 };
 
 
-var PageStore = new Store({
+var CredentialsStore = new Store({
 
   /**
    * @returns {Credentials}
@@ -45,15 +45,15 @@ var PageStore = new Store({
 
 });
 
-PageStore.dispatcherToken = Dispatcher.register(payload => {
+CredentialsStore.dispatcherToken = Dispatcher.register(payload => {
 
   var action = payload.action;
 
   if (action.actionType == ActionTypes.SET_CREDENTIALS) {
-    PageStore.set(action.credentials);
-    PageStore.emitChange();
+    CredentialsStore.set(action.credentials);
+    CredentialsStore.emitChange();
   }
 
 });
 
-module.exports = PageStore;
+module.exports = CredentialsStore;
