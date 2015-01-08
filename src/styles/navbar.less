@@ -11,14 +11,12 @@ body {
 
 .navbar-top {
   &:extend(.navbar);
-  &:extend(.navbar-inverse);
   &:extend(.navbar-fixed-top);
 }
 
 .navbar-brand {
   padding-top: 8px;
   padding-bottom: 8px;
-  color: #00d8ff !important;
   font-size: 24px;
 
   img {
@@ -34,8 +32,6 @@ body {
 .navbar-footer {
   &:extend(.navbar);
   &:extend(.navbar-fixed-bottom);
-
-  background-color: darken(@body-bg, 2%);
 
   .text-muted {
     margin-top: 1em;
